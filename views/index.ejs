@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash-Card</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <h1>Hello Anki</h1>
+    <button class="open-button" onclick="openForm()">Add new</button>
+    <button class="open-review" onclick="startReview()">Review</button>
+    
+    <% if (card && card.length >= 1) { %>
+      <div class="box">
+        <% for (let i = 0; i < card.length; i++) { %>
+        
+        <div class="card"  data-id="<%= card[i].id %>">
+          <p class="card-text"><%= card[i].front %></p>
+        </div>
+        <% } %>
+      </div>
+    <% } else { %>
+      <div class="msg">
+        <h3>You don't have any card.</h3>
+        <button class="" onclick="openForm()">Add new</button>
+      </div>
+    <% } %>
+<!-- The form -->
+<div class="form-popup" id="myForm">
+  <form action="../card/addCard" class="form-container" method="POST">
+    <!-- <h1>Add new card</h1> -->
+
+    <label for="front"><b>Front card</b></label><br>
+    <textarea type="text" placeholder="Enter question" name="front" required></textarea><br>
+
+    <label for="back"><b>Back card</b></label><br>
+    <textarea type="text" placeholder="Enter Answer" name="back" required></textarea>
+
+    <button type="submit" class="btn addOne">Add</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Cancle</button>
+  </form>
+</div>
+
+</body>
+    <script src="/main.js"></script>
+</html>

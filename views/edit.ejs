@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit</title>
+    <link rel="stylesheet" href="/main.css">
+</head>
+<body>
+    <h1>Hello Anki</h1>
+    <button class="open-button" onclick="openForm()">Add new</button>
+    
+    <% if (card && card.length >= 1) { %>
+      <div class="box">
+        <% for (let i = 0; i < card.length; i++) { %>
+        
+        <div class="card"  data-id="<%= card[i].id %>">
+          <p><%= card[i].front %></p>
+        </div>
+        <% } %>
+      </div>
+    <% } else { %>
+      <div class="msg">
+        <h3>You don't have any card.</h3>
+        <button class="" onclick="openForm()">Add new</button>
+      </div>
+    <% } %>
+
+<!-- update card -->
+<div class="form-popup" id="myCard">
+  <form method="POST" action="../updateCard/<%= cardid%>" enctype="application/x-www-form-urlencoded" class="form-container" id="updateForm">
+
+    <textarea type="text" id='cardid' name="cardid"><%= cardid %></textarea>
+    <label for="front"><b>Front card</b></label><br>
+    <textarea type="text" id='front' name="front" required><%= sCard.front %></textarea><br>
+
+    <label for="back"><b>Back card</b></label><br>
+    <textarea type="text" id="back"  name="back" required><%= sCard.back %></textarea>
+
+    <input type="hidden" name="_method" value="PUT">
+    <button type="submit" class="btn">update</button>
+    <a href="/card">
+      <button type="button" class="btn cancel" onclick="closeForm()">Cancle</button>
+    </a>
+  </form>
+  <form method="POST" class="form-container" action="../deleteCard/<%= cardid%>" id="deleteForm" enctype="application/x-www-form-urlencoded" >
+  
+    <input type="hidden" name="_method" value="DELETE">
+    <button type="submit" class="btn delete" >Delete</button>
+
+  </form>
+</div>
+
+</body>
+<script src="/main.js"></script>
+</html>
+    
