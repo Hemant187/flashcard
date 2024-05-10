@@ -1,5 +1,5 @@
 {
-<<<<<<< HEAD
+
   "version": 2,
   "builds": [
     {
@@ -13,9 +13,4 @@
       "dest": "/server.js"
     }
   ]
-=======
-   "rewrites":  [
-       {"source": "/(.*)", "destination": "/"}
-    ]
->>>>>>> 049ea6bcf36398bd7f6c967d622672ec68a45510
 }
