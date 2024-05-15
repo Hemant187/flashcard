@@ -17,6 +17,7 @@
   </nav>
 
 <% const items = card %>
+<% if(items.length >= 1) {%>
 <% let currentIndex=0; %>
   <div class="review  text-center  ">
     <div class="front card " id="front">
@@ -43,9 +44,14 @@
       </div>
     </div>
   </div>
+<% } else { %>
+  <div class="msg text-center mt-5">
+    <h3>You don't have any card.</h3>
+    <button><a href="../card">Add new</a></button>
+  </div>
+<% } %>
 
-
-</body>
+</body>=
   <script>
     const items = <%- JSON.stringify(items) %>;
     let currentIndex = 0; // Initialize currentIndex here
