@@ -28,6 +28,7 @@ const getReview = async (req, res) => {
   try {
     if(req.user){
       const cards = await Cards.find({userId: req.user.id })
+      console.log(cards)
       res.render('review.ejs', { card: cards }) 
     }else{
       return res.redirect('/login')

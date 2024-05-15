@@ -17,7 +17,7 @@ router.get('/review', getReview)
 
 //@des cards api
 //@route get /review/cards
-router.get('/review/cards', sendCard)
+// router.get('/review/cards', sendCard)
 
 //@des edit card
 //@route Get /edit/id
