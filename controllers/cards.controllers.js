@@ -27,8 +27,8 @@ const sendCard = async (req, res) => {
 const getReview = async (req, res) => {
   try {
     if(req.user){
-      const cards = await Cards.find({userId: req.user.id })
-      console.log(cards)
+      const cards = await Cards.find({userId: req.user.id }).sort({score: 1})
+      // console.log(cards)
       res.render('review.ejs', { card: cards }) 
     }else{
       return res.redirect('/login')
@@ -79,6 +79,25 @@ const updateCard = async (req, res) => {
   }
 }
 
+const updateScore = async (req, res) => {
+  try {
+    const { flashcardId, feedback } = req.body;
+    console.log(req.body)
+    const flashcard = await Cards.findById(flashcardId);
+
+    if (!flashcard) {
+      return res.status(404).send('Flashcard not found');
+    }
+
+    flashcard.score += Number(req.body.feedback)
+    await flashcard.save();
+
+    res.status(200).json({ message: 'Feedback updated successfully' });
+  } catch (err) {
+    console.error('Error handling feedback:', err);
+    res.status(500).send('Internal Server Error');
+  }
+}
 
 const deleteCard = async (req, res) => {
   try {
@@ -98,4 +117,4 @@ const deleteCard = async (req, res) => {
     }
 }
 
-module.exports = { getCard, createCard, editCard, updateCard, deleteCard, getReview, sendCard}
+module.exports = { getCard, createCard, editCard, updateCard, deleteCard, getReview, sendCard, updateScore}

@@ -3,80 +3,106 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Review Flashcards</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .review-container {
+      margin-top: 50px;
+    }
+    .nav-item h1 {
+      margin: 0;
+    }
+    .card-front, .card-back {
+      font-size: 1.5rem;
+    }
+    .btn {
+      margin: 5px;
+    }
+  </style>
 </head>
-<link rel="stylesheet" href="/review.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <body>
-
-  <nav class="navbar navbar-light bg-light">
-    <a class="navbar-brand ms-5" href="/card">
-      <i class="fa-solid fa-arrow-left"></i>
-    </a>
-  </nav>
-
-<% const items = card %>
-<% if(items.length >= 1) {%>
-<% let currentIndex=0; %>
-  <div class="review  text-center  ">
-    <div class="front card " id="front">
-      <p class="card-front">
-        <%= items[currentIndex].front %>
-      </p>
-    </div>
-    <div class="card-body "  >
-      <p class="invisible" id="back">
-        <%= items[currentIndex].back %>
-      </p>
-    </div>
-    <div class="flip text-center" id="flip">
-      <button onclick="flip()">
-        Flip
-      </button>
-    </div>
-    <div class="invisible"  id="next">
-      <div  onclick="next()">
-        <button>Fail</button>
-        <button>Hard</button>
-        <button>Good</button>
-        <button>Easy</button>
+  <% let items = card %>
+  <% if (items.length >= 1) { %>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="../card"><i class="fa-solid fa-arrow-left"></i></a>
+        <h1 class="mx-auto">Review</h1>
+        <a class="navbar-brand" href="../logout"><i class="fa-solid fa-power-off"></i></a>
+      </div>
+    </nav>
+    
+    <div class="container review-container text-center">
+      <div class="card mx-auto" style="width: 50rem;">
+        <div class="card-body">
+          <h5 class="card-title" id="front"><%= items[0].front %></h5>
+          <p class="card-text invisible" id="back"><%= items[0].back %></p>
+          <div id="flip">
+            <button class="btn btn-primary" onclick="flip()">Flip</button>
+          </div>
+          <div class="invisible mt-3" id="next">
+            <button class="btn btn-danger" onclick="submitFeedback('-2')">Fail</button>
+            <button class="btn btn-warning" onclick="submitFeedback('-1')">Hard</button>
+            <button class="btn btn-success" onclick="submitFeedback('1')">Good</button>
+            <button class="btn btn-info" onclick="submitFeedback('2')">Easy</button>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-<% } else { %>
-  <div class="msg text-center mt-5">
-    <h3>You don't have any card.</h3>
-    <button><a href="../card">Add new</a></button>
-  </div>
-<% } %>
+  <% } else { %>
+    <div class="msg text-center mt-5">
+      <h3>You don't have any cards.</h3>
+      <a href="../card" class="btn btn-primary">Add new</a>
+    </div>
+  <% } %>
 
-</body>=
   <script>
     const items = <%- JSON.stringify(items) %>;
-    let currentIndex = 0; // Initialize currentIndex here
-    let frontCard = document.getElementById('front');
-    let backCard = document.getElementById('back');
-    let flipBtn = document.getElementById('flip');
-    let nextBtn = document.getElementById('next');
+    let currentIndex = 0;
+    const frontCard = document.getElementById('front');
+    const backCard = document.getElementById('back');
+    const flipBtn = document.getElementById('flip');
+    const nextBtn = document.getElementById('next');
+
     function flip() {
       backCard.classList.remove('invisible');
       flipBtn.classList.add('invisible');
       nextBtn.classList.remove('invisible');
     }
-  
-    function next() {
-      currentIndex++; // Increment currentIndex
-      console.log(currentIndex)
-      if (currentIndex >= items.length) {
-        currentIndex = 0; // Reset currentIndex if it exceeds array length
+
+    async function submitFeedback(feedback) {
+      try {
+        const response = await fetch('/card/updateScore', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            flashcardId: items[currentIndex]._id,
+            feedback: feedback
+          })
+        });
+
+        if (response.ok) {
+          currentIndex++;
+          if (currentIndex >= items.length) {
+            window.location.href = '/card';
+            return;
+          }
+
+          const nextCard = items[currentIndex];
+          frontCard.innerHTML = `<h5 class="card-title">${nextCard.front}</h5>`;
+          backCard.innerHTML = `<p class="card-text">${nextCard.back}</p>`;
+          backCard.classList.add('invisible');
+          flipBtn.classList.remove('invisible');
+          nextBtn.classList.add('invisible');
+        } else {
+          console.error('Failed to update feedback:', response.statusText);
+        }
+      } catch (error) {
+        console.error('Error submitting feedback:', error);
       }
-      frontCard.innerHTML = "<p>" + items[currentIndex].front + "</p>";
-      backCard.innerHTML = "<p>" + items[currentIndex].back + "</p>";
-      backCard.classList.add('invisible');
-      flipBtn.classList.remove('invisible');
-      nextBtn.classList.add('invisible');
     }
   </script>
-  
+</body>
 </html>
