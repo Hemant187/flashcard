@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <a href="/login">Login</a>
-  <a href="/signup">Signup</a>
-</body>
+<%- include('partials/header') -%>
+<main class="container">
+  <h1 class="text-danger darken mt-5">Flashcard Master</h1>
+  <div class="row justify-content-around mt-5">
+      <a href="/login" class="col-3 btn btn-primary"> Login</a>
+      <a href="/signup" class="col-3 btn btn-primary"> Signup</a>
+  </div>
+</main>
 </html>

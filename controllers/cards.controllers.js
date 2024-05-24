@@ -4,7 +4,7 @@ const getCard = async (req, res) => {
   try {
     if(req.user){
       const cards = await Cards.find({userId: req.user.id })
-      res.render('index.ejs', { card: cards }) 
+      res.render('index.ejs', { card: cards , user:req.user }) 
     }else{
       return res.redirect('/login')
     }

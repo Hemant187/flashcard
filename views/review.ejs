@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Review Flashcards</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<%- include('partials/header') -%>
   <style>
     .review-container {
       margin-top: 50px;
@@ -33,7 +26,7 @@
     </nav>
     
     <div class="container review-container text-center">
-      <div class="card mx-auto" style="width: 50rem;">
+      <div class="card mx-auto">
         <div class="card-body">
           <h5 class="card-title" id="front"><%= items[0].front %></h5>
           <p class="card-text invisible" id="back"><%= items[0].back %></p>

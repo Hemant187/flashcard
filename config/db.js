@@ -7,6 +7,9 @@ const connectDB = async (req,res) => {
   } catch (err) {
     console.error(err);
   }
+  const db = mongoose.connection.db;
+    
+
 }
 
 module.exports = connectDB

@@ -96,7 +96,18 @@ const postSignup = async (req, res, next) => {
 
 }
 
+// Define the googleAuth function to return the middleware directly
+const googleAuth = passport.authenticate('google', { scope: ['profile'] });
+
+// Define the googleRedirect function to return an array of middleware and handler
+const googleRedirect = [
+  passport.authenticate('google', { failureRedirect: '/', failureMessage: true }),
+  (req, res) => {
+    // Successful authentication, redirect home.
+    res.redirect('/card');
+  }
+];
 
 module.exports = {
-  getLogin, postLogin, getLogout, getSignup, postSignup, getHome
+  getLogin, postLogin, getLogout, getSignup, postSignup, getHome, googleAuth, googleRedirect
 }

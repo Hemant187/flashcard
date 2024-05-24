@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flash-Card</title>
-    <link rel="stylesheet" href="/main.css">
+<%- include('partials/header') -%>
 </head>
 <body>
-    <h1>Hello Anki</h1>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <h1 class="mx-auto">Hello <%= user.userName%></h1>
+      <a class="navbar-brand" href="../logout">Logout<i class="fa-solid fa-power-off"></i></a>
+    </div>
+  </nav>
     <button class="open-button" onclick="openForm()">Add new</button>
     <button class="open-review" onclick="startReview()">Review</button>
     
@@ -23,7 +22,7 @@
     <% } else { %>
       <div class="msg">
         <h3>You don't have any card.</h3>
-        <button class="" onclick="openForm()">Add new</button>
+        <button class="btn btn-danger" onclick="openForm()">Add new</button>
       </div>
     <% } %>
 <!-- The form -->
