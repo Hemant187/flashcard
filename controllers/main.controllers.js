@@ -3,7 +3,7 @@ const passport = require('passport')
 const validator = require('validator')
 
 const getHome = (req,res)=>{
-  res.render('home.ejs')
+  res.redirect('/login')
 }
 const getLogin = (req, res) => {
   if(req.user){

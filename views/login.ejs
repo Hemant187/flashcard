@@ -6,6 +6,11 @@
             <div class="alert alert-danger"><%= el.msg %></div>
         <% }) %>    
     <% } %>
+    <% if (locals.messages.errors) { %>
+      <% messages.errors.forEach( el => { %>
+          <div class="alert alert-danger"><%= el.msg %></div>
+      <% }) %>    
+  <% } %>
     <section class="vh-100">
         <div class="container-fluid h-custom">
           <div class="row d-flex justify-content-center align-items-center h-100">
@@ -15,8 +20,8 @@
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
               
-                <div class="section">
-                    <a data-mdb-ripple-init class="btn btn-primary btn-lg btn-block" style="background-color: #d66060" href="/auth/google"
+                <div class="section d-flex justify-content-center">
+                    <a data-mdb-ripple-init class="btn btn-primary btn-lg btn-block " style="background-color: #d66060" href="/auth/google"
                     role="button">
                     <i class="fab fa-google me-2"></i>Continue with Google</a>
                 </div>
@@ -38,9 +43,10 @@
                     <input type="password" id="form3Example4" name="password" class="form-control form-control-lg"
                       placeholder="Enter password" />
                   </div>
-                  <div class="text-center text-lg-start mt-4 pt-2">
+                  <div class="text-center text-lg-start mt-4 pt-2 ">
                     <button  type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg"
                       style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+                      <br>
                     <p class="small fw-bold mt-2 pt-1 mb-0">Don't have an account? <a href="/signup"
                         class="link-danger">Register</a></p>
                   </div>

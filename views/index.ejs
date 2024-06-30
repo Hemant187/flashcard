@@ -1,14 +1,14 @@
 <%- include('partials/header') -%>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand-lg navbar-light bg-warning">
     <div class="container-fluid">
-      <h1 class="mx-auto">Hello <%= user.userName%></h1>
+      <h1 class="mx-auto">FlashCard Master</h1>
       <a class="navbar-brand" href="../logout">Logout<i class="fa-solid fa-power-off"></i></a>
     </div>
   </nav>
     <button class="open-button" onclick="openForm()">Add new</button>
-    <button class="open-review" onclick="startReview()">Review</button>
+    <button class="open-review" onclick="openReview()">Review</button>
     
     <% if (card.length >= 1) { %>
       <div class="box">
